@@ -12,20 +12,72 @@ db = SQLAlchemy()
 ##############################################################################
 # Part 1: Compose ORM
 
-# class Brand(db.Model):
-#     """Car brand."""
+class Award(db.Model):
+    """Car awards."""
 
-#     __tablename__ = "brands"
+    __tablename__ = "awards"
 
-#     pass
+    award_id = db.Column(db.Integer, 
+                         autoincrement=True, 
+                         nullable=False, 
+                         primary_key=True)
+    year = db.Column(db.Integer,
+                     nullable=False) 
+    winner_id = db.Column(db.Integer, 
+                          db.ForeignKey('models.model_id'))
+    name = db.Column(db.String(50),
+                     nullable=False)
+    
+    model = db.relationship('Model', backref='awards')
+
+    def __repr__(self):
+        return f'<Award award_id={self.award_id} name={award.name}>'
 
 
-# class Model(db.Model):
-#     """Car model."""
+class Brand(db.Model):
+    """Car brand."""
 
-#     __tablename__ = "models"
+    __tablename__ = "brands"
 
-#     pass
+    brand_id = db.Column(db.String(5), 
+                        nullable=False, 
+                        primary_key=True)
+    name = db.Column(db.String(50),
+                     nullable=False)
+    founded = db.Column(db.Integer)
+    headquarters = db.Column(db.String(50))
+    discontinued = db.Column(db.Integer)
+
+    # models = a list of Model objects for specified brand
+
+    def __repr__(self):
+        return f'<Brand brand_id={self.brand_id} name={self.name}>'
+
+
+class Model(db.Model):
+    """Car model."""
+
+    __tablename__ = "models"
+
+    model_id = db.Column(db.Integer, 
+                         autoincrement=True, 
+                         nullable=False, 
+                         primary_key=True)
+    year = db.Column(db.Integer,
+                     nullable=False)
+    brand_id = db.Column(db.String(5), 
+                         db.ForeignKey('brands.brand_id'),
+                         nullable=False)
+    name = db.Column(db.String(50),
+                     nullable=False)
+
+    brand = db.relationship('Brand', backref='models')
+
+    # awards = a list of Award objects for specified model
+
+    def __repr__(self):
+        return f'<Model model_id={self.model_id} name={self.name}>'
+
 
 # End Part 1
 
