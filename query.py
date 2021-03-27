@@ -23,12 +23,18 @@ init_app()
 # 1. What is the datatype of the returned value of
 # ``Brand.query.filter_by(name='Ford')``?
 
+# KF: This query returns a BaseQuery object!
 
 
 # 2. In your own words, what is an association table, and what type of
 # relationship (many to one, many to many, one to one, etc.) does an
 # association table manage?
 
+# KF: An association table is a bridge between two SQL tables that 
+#     have a 'many-to-many' cardinality. Since SQL can only do 
+#     'one-to-one' or 'one-to-many' cardinality, an extra step is
+#     required. Each table will have a 'one-to-many' relationship
+#     with the association table. 
 
 
 
